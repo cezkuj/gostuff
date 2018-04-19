@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-        "log"
+	"log"
 )
 
 func test_db() {
@@ -24,8 +24,8 @@ func test_db() {
 	}
 	defer stmt.Close() // danger!
 	var (
-         table string
-        )
+		table string
+	)
 	rows, err := stmt.Query()
 	if err != nil {
 		log.Fatal(err)
