@@ -6,5 +6,6 @@ func main() {
 	//chanells()
 	//scope()
 	//test_interfaces()
-        some_pkg.Printy()
+        //some_pkg.Printy()
+      
 }
