@@ -16,6 +16,6 @@ func main() {
 	//test_db()
 	//test_server()
 	//test_strings()
-        //test_slices()
-        test_sha1()
+	//test_slices()
+	test_sha1()
 }

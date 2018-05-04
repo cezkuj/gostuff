@@ -40,7 +40,7 @@ func test_server() {
 	srv := &http.Server{
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
-		Handler: m.HTTPHandler(nil),
+		Handler:      m.HTTPHandler(nil),
 	}
 	go func() { log.Fatal(srv.ListenAndServe()) }()
 	serveMux := &http.ServeMux{}
