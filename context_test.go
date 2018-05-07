@@ -19,8 +19,8 @@ func TestContext(*testing.T) {
 			for {
 				select {
 				case <-ctx.Done():
-                                        fmt.Println(ctx.Err())
-                                        close(dst)
+					fmt.Println(ctx.Err())
+					close(dst)
 					return // returning not to leak the goroutine
 				case dst <- n:
 					n++
@@ -39,5 +39,5 @@ func TestContext(*testing.T) {
 			cancel()
 		}
 	}
-        fmt.Println("going forward")
+	fmt.Println("going forward")
 }
