@@ -11,13 +11,11 @@ func TestIota(*testing.T) {
 		b = iota
 		c
 	)
-        const (
-d = 1 - iota
-e 
-f
-
-
-)
-    	fmt.Println(a, b, c)
-        fmt.Println(d, e ,f)
+	const (
+		d = 1 - iota
+		e
+		f
+	)
+	fmt.Println(a, b, c)
+	fmt.Println(d, e, f)
 }
