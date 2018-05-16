@@ -9,30 +9,30 @@ type A struct {
 	number int
 }
 type B struct {
-        number int
+	number int
 }
 
 type C struct {
 	A
-        B
+	B
 	number int
 }
+
 func (a A) print() {
- fmt.Println(a, "a")
+	fmt.Println(a, "a")
 }
 
 func (b B) print() {
- fmt.Println(b, "b")
+	fmt.Println(b, "b")
 }
 
-
 func TestInh(*testing.T) {
-        a := A{}
-        c := C{}
+	a := A{}
+	c := C{}
 	fmt.Println(a)
 	fmt.Println(c)
-        a.print()
-        c.A.print()
-        c.print()
+	a.print()
+	c.A.print()
+	c.print()
 
 }
