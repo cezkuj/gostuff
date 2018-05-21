@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/golang-collections/collections/stack"
+	"strings"
 	"testing"
 )
 
@@ -29,14 +31,22 @@ a
 
 type Page struct {
 	name     string
-	subPages *[]Page
+	subPages map[string]Page
 }
 
-func getUndetermisticKey(m map[string]string) string {
-	for k := range m {
-		return k
+func getKey(m map[string]string) string {
+	for key := range m {
+		return key
 	}
 	return ""
+}
+
+func createStack(page_name string, m map[string]string) (*stack.Stack, string) {
+	st := stack.New()
+	for ; m[page_name] != ""; page_name = m[page_name] {
+		st.Push(page_name)
+	}
+	return st, page_name
 }
 func TestMigrate(*testing.T) {
 	m := map[string]string{
@@ -48,18 +58,33 @@ func TestMigrate(*testing.T) {
 		"c3": "b",
 		"b":  "a",
 	}
-	queue := []string{}
-	key := getUndetermisticKey(m)
-	for ; m[key] != ""; key = m[key] {
-		queue = append(queue, key)
+	key := getKey(m)
+	_, masterPage := createStack(key, m)
+	p_head := Page{masterPage, make(map[string]Page)}
+	for key := range m {
+		p := p_head
+		st, _ := createStack(key, m)
+		for st.Len() > 0 {
+			page_name, ok := st.Pop().(string)
+			if !ok {
+				fmt.Println("not ok")
+			}
+			if _, present := p.subPages[page_name]; !present {
+				page := Page{page_name, make(map[string]Page)}
+				p.subPages[page.name] = page
+				p = page
+			} else {
+				p = p.subPages[page_name]
+			}
+		}
 	}
-	fmt.Println("master page: " + key)
-	p := Page{key, &[]Page{}}
-	p_head := p
-	for i := 0; i != len(queue); i++ {
-		page := Page{queue[len(queue)-1-i], &[]Page{}}
-		*p.subPages = append(*p.subPages, page)
-		p = page
+	fmt.Println(p_head)
+	printPages(p_head, 0)
+}
+func printPages(page Page, depth int) {
+	depth++
+	fmt.Println(strings.Repeat(" ", depth*4), depth, page.name)
+	for _, subpage := range page.subPages {
+		printPages(subpage, depth)
 	}
-	fmt.Println((*p_head.subPages)[0].subPages)
 }
