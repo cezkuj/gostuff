@@ -9,13 +9,11 @@ type A struct {
 	number int
 }
 type B struct {
-	number int
 }
 
 type C struct {
 	A
 	B
-	number int
 }
 
 func (a A) print() {
@@ -27,12 +25,9 @@ func (b B) print() {
 }
 
 func TestInh(*testing.T) {
-	a := A{}
-	c := C{}
+	a := A{2}
+	c := C{A:a}
 	fmt.Println(a)
 	fmt.Println(c)
-	a.print()
-	c.A.print()
-	c.print()
-
+        fmt.Println(c.number)
 }
